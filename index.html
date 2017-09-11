@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	input,button{
+		margin:10px 10px;
+	}
+</style>
+<body>
+	<form>
+		<label>
+			<input type="text" name="useName"  value="">
+			<span></span>
+		</label>
+		<br/>
+		<label>
+			<input type="text" name="bank" value="">
+			<span></span>
+		</label>
+	</form>
+	<button type="">提交</button>
+</body>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.validate.js"></script>
+<script>
+	$(document).ready(function(){
+   function checkValidate(){
+   	console.log('ff')
+    $("form").validate({
+    	errorPlacement:function(error,element){
+    		$(element).siblings().append( error );
+    	},
+    	errorElement: "label",
+    	rules:{
+    		useName:{
+    			required:true,
+    			rangelength:[2,10]
+    		},
+    		bank:{
+    			required:true,
+    			addMethod:true
+    		}
+    	},
+    	messages:{
+    		useName:{
+    			required:'必填',
+    			rangelength:function(params,element){
+    				return '范围为'+params[0]+'到'+params[1]+'位'
+    			}
+    		},
+    		bank:{
+    			required:'必填'
+    		}
+    	}
+    })
+    
+    $.validator.addMethod('addMethod',function(value,element,params){
+    	var addMethod = /^(\d{16}|\d{19})$/;
+    	return this.optional(element)||(addMethod.test(value));
+    },'银行卡号必须是16位或者19位数字')
+
+    var flag = $("form").valid();
+
+    return flag;
+   }
+   $('button').on('click',function(){
+   	 switch (checkValidate()){
+   	 	case true: alert('成功')
+   	 		break;
+   	 		default:
+   	 			alert('失败')
+   	 }
+   })
+	})
+</script>
+</html>

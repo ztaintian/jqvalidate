@@ -16,12 +16,27 @@
 <body>
 	<form>
 		<label>
-			<input type="text" name="useName"  value="">
+			用户名：<input type="text" name="useName"  value="">
 			<span></span>
 		</label>
 		<br/>
 		<label>
-			<input type="text" name="bank" value="">
+			银行卡号：<input type="text" name="bank" value="">
+			<span></span>
+		</label>
+		<br/>
+		<label>
+			密码：<input type="password" name="passWord" id="passWord"  value="">
+			<span></span>
+		</label>
+		<br/>
+		<label>
+			重复密码：<input type="password" name="againPassword" value="">
+			<span></span>
+		</label>
+		<br/>
+		<label>
+			邮箱：<input type="email" name="email" value="">
 			<span></span>
 		</label>
 	</form>
@@ -46,6 +61,17 @@
     		bank:{
     			required:true,
     			addMethod:true
+    		},
+    		passWord:{
+    			required:true,
+    			rangelength:[6,16]
+    		},
+    		againPassword:{
+    			equalTo:'#passWord'
+    		},
+    		email:{
+ 					required: true,
+        	email: true    			
     		}
     	},
     	messages:{
@@ -57,6 +83,19 @@
     		},
     		bank:{
     			required:'必填'
+    		},
+    		passWord:{
+    			required:'必填',
+    			rangelength:function(params,element){
+    				return '范围为'+params[0]+'到'+params[1]+'位'
+    			}
+    		},
+    		againPassword:{
+    			equalTo: '你的输入不相同'
+    		},
+    		email:{
+    			required:'必填',
+    			email: '请输入一个正确的邮箱'
     		}
     	}
     })

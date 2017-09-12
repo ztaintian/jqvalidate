@@ -52,7 +52,8 @@
 <script src="js/extend.js"></script>
 <script>
     $(document).ready(function(){
-      $('body').mask()
+      $('body').mask();
+      $('body').removeMask();
       function checkValidate(){
         $("form").validate({
         	errorPlacement:function(error,element){

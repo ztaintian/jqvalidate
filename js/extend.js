@@ -32,6 +32,9 @@ $.fn.extend({
 			'top': (settings.mHeight - $img.height())/ 2,
 			'left': (settings.mWidth - $img.width())/ 2			
 		})
-
+	},
+	removeMask:function(){
+		$('.bl-mask').css({'display':'none'});
+		$('.loadImg').css({'display':'none'})
 	}
 })

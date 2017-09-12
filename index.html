@@ -5,10 +5,15 @@
 	<title>Document</title>
 </head>
 <style>
+
 	*{
 		margin:0;
 		padding:0;
 	}
+  .loadImg{
+    width:70px;
+    height:70px;
+  }
 	input,button{
 		margin:10px 10px;
 	}
@@ -44,79 +49,80 @@
 </body>
 <script src="js/jquery.js"></script>
 <script src="js/jquery.validate.js"></script>
+<script src="js/extend.js"></script>
 <script>
-	$(document).ready(function(){
-   function checkValidate(){
-   	console.log('ff')
-    $("form").validate({
-    	errorPlacement:function(error,element){
-    		$(element).siblings().append( error );
-    	},
-    	errorElement: "label",
-    	rules:{
-    		useName:{
-    			required:true,
-    			rangelength:[2,10]
-    		},
-    		bank:{
-    			required:true,
-    			addMethod:true
-    		},
-    		passWord:{
-    			required:true,
-    			rangelength:[6,16]
-    		},
-    		againPassword:{
-    			equalTo:'#passWord'
-    		},
-    		email:{
- 					required: true,
-        	email: true    			
-    		}
-    	},
-    	messages:{
-    		useName:{
-    			required:'必填',
-    			rangelength:function(params,element){
-    				return '范围为'+params[0]+'到'+params[1]+'位'
-    			}
-    		},
-    		bank:{
-    			required:'必填'
-    		},
-    		passWord:{
-    			required:'必填',
-    			rangelength:function(params,element){
-    				return '范围为'+params[0]+'到'+params[1]+'位'
-    			}
-    		},
-    		againPassword:{
-    			equalTo: '你的输入不相同'
-    		},
-    		email:{
-    			required:'必填',
-    			email: '请输入一个正确的邮箱'
-    		}
-    	}
+    $(document).ready(function(){
+      $('body').mask()
+      function checkValidate(){
+        $("form").validate({
+        	errorPlacement:function(error,element){
+        		$(element).siblings().append( error );
+        	},
+        	errorElement: "label",
+        	rules:{
+        		useName:{
+        			required:true,
+        			rangelength:[2,10]
+        		},
+        		bank:{
+        			required:true,
+        			addMethod:true
+        		},
+        		passWord:{
+        			required:true,
+        			rangelength:[6,16]
+        		},
+        		againPassword:{
+        			equalTo:'#passWord'
+        		},
+        		email:{
+     					required: true,
+            	email: true    			
+        		}
+        	},
+        	messages:{
+        		useName:{
+        			required:'必填',
+        			rangelength:function(params,element){
+        				return '范围为'+params[0]+'到'+params[1]+'位'
+        			}
+        		},
+        		bank:{
+        			required:'必填'
+        		},
+        		passWord:{
+        			required:'必填',
+        			rangelength:function(params,element){
+        				return '范围为'+params[0]+'到'+params[1]+'位'
+        			}
+        		},
+        		againPassword:{
+        			equalTo: '你的输入不相同'
+        		},
+        		email:{
+        			required:'必填',
+        			email: '请输入一个正确的邮箱'
+        		}
+        	}
+        })
+      
+        $.validator.addMethod('addMethod',function(value,element,params){
+        	var addMethod = /^(\d{16}|\d{19})$/;
+        	return this.optional(element)||(addMethod.test(value));
+        },'银行卡号必须是16位或者19位数字')
+
+        var flag = $("form").valid();
+
+        return flag;
+       }
+       $('button').on('click',function(){
+       	 switch (checkValidate()){
+       	 	case true: alert('成功')
+       	 		break;
+       	 		default:
+       	 			alert('失败')
+       	 }
+       })
     })
-    
-    $.validator.addMethod('addMethod',function(value,element,params){
-    	var addMethod = /^(\d{16}|\d{19})$/;
-    	return this.optional(element)||(addMethod.test(value));
-    },'银行卡号必须是16位或者19位数字')
-
-    var flag = $("form").valid();
-
-    return flag;
-   }
-   $('button').on('click',function(){
-   	 switch (checkValidate()){
-   	 	case true: alert('成功')
-   	 		break;
-   	 		default:
-   	 			alert('失败')
-   	 }
-   })
-	})
 </script>
 </html>
